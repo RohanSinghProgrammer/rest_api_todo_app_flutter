@@ -44,21 +44,23 @@ class _TodoListsState extends State<TodoLists> {
     alert.successAlert(context: context, msg: "ToDo Deleted Successfully!");
   }
 
-  void editTodo(Map<String, dynamic> todo) {
-    Navigator.push(
+  void editTodo(Map<String, dynamic> todo) async {
+    await Navigator.push(
         context, MaterialPageRoute(builder: (context) => AddTodo(todo: todo)));
+    getData();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: ElevatedButton(
-        onPressed: () {
-          Navigator.push(
+        onPressed: () async {
+          await Navigator.push(
               context,
               MaterialPageRoute(
                 builder: (context) => AddTodo(),
               ));
+          getData();
         },
         style: ElevatedButton.styleFrom(
           backgroundColor: Colors.cyan[700],

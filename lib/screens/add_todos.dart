@@ -49,11 +49,7 @@ class _AddTodoState extends State<AddTodo> {
         // clear fields
         _titleController.clear();
         _descriptionController.clear();
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => const TodoLists(),
-            ));
+        Navigator.pop(context);
       } else {
         // ignore: use_build_context_synchronously
         alert.errorAlert(context: context, msg: "Something went wrong");
@@ -80,11 +76,7 @@ class _AddTodoState extends State<AddTodo> {
       // clear fields
       _titleController.clear();
       _descriptionController.clear();
-      Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => const TodoLists(),
-          ));
+      Navigator.pop(context);
     } else {
       // ignore: use_build_context_synchronously
       alert.errorAlert(context: context, msg: "Something went wrong");
