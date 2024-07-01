@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:rest_api_todo_app_flutter/screens/add_todos.dart';
 import 'package:rest_api_todo_app_flutter/services/alerts.dart';
 import 'package:rest_api_todo_app_flutter/services/todos.dart';
+import 'package:rest_api_todo_app_flutter/widgets/todo_card.dart';
 
 class TodoLists extends StatefulWidget {
   const TodoLists({super.key});
@@ -79,39 +80,24 @@ class _TodoListsState extends State<TodoLists> {
         visible: loading,
         replacement: RefreshIndicator(
           onRefresh: getData,
-          child: ListView.builder(
-            itemBuilder: (context, index) {
-              final item = all_todos[index] as Map;
-              return ListTile(
-                  leading: CircleAvatar(
-                    backgroundColor: Colors.cyan[700],
-                    child: Text(
-                      (index + 1).toString(),
-                    ),
-                  ),
-                  title: Text(item['title']),
-                  subtitle: Text(item['description']),
-                  trailing: PopupMenuButton(
-                      itemBuilder: (context) => const [
-                            PopupMenuItem(
-                              value: 1,
-                              child: Text("Delete"),
-                            ),
-                            PopupMenuItem(
-                              value: 2,
-                              child: Text("Update"),
-                            ),
-                          ],
-                      onSelected: (value) {
-                        if (value == 1) {
-                          deleteTodo(item['_id'].toString());
-                        } else if (value == 2) {
-                          // EDIT
-                          editTodo(item as Map<String, dynamic>);
-                        }
-                      }));
-            },
-            itemCount: all_todos.length,
+          child: Visibility(
+            visible: all_todos.isNotEmpty,
+            replacement: const Center(child: Text('ToDo list is empty')),
+            child: Padding(
+              padding: const EdgeInsets.only(top: 12),
+              child: ListView.builder(
+                itemBuilder: (context, index) {
+                  final item = all_todos[index] as Map;
+                  return TodoCard(
+                    index: index,
+                    item: item,
+                    editTodo: editTodo,
+                    deleteTodo: deleteTodo,
+                  );
+                },
+                itemCount: all_todos.length,
+              ),
+            ),
           ),
         ),
         child: const Center(
