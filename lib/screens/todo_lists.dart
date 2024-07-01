@@ -43,6 +43,11 @@ class _TodoListsState extends State<TodoLists> {
     alert.successAlert(context: context, msg: "ToDo Deleted Successfully!");
   }
 
+  void editTodo(Map<String, dynamic> todo) {
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) => AddTodo(todo: todo)));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -51,7 +56,7 @@ class _TodoListsState extends State<TodoLists> {
           Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => const AddTodo(),
+                builder: (context) => AddTodo(),
               ));
         },
         style: ElevatedButton.styleFrom(
@@ -102,6 +107,7 @@ class _TodoListsState extends State<TodoLists> {
                           deleteTodo(item['_id'].toString());
                         } else if (value == 2) {
                           // EDIT
+                          editTodo(item as Map<String, dynamic>);
                         }
                       }));
             },

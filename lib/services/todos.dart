@@ -34,6 +34,27 @@ class TodoServices {
     }
   }
 
+  // update ToDo
+  Future updateTodo(
+      {required String id, required String title, required String desc}) async {
+    try {
+      String url = 'https://api.nstack.in/v1/todos/$id';
+      Uri uri = Uri.parse(url);
+      final Map<String, dynamic> body = {
+        "title": title,
+        "description": desc,
+        "is_completed": false
+      };
+      var response = await http.put(uri,
+          body: jsonEncode(body),
+          headers: {'Content-Type': 'application/json'});
+
+      return response;
+    } catch (e) {
+      throw Exception(e);
+    }
+  }
+
   // DELETE TODO
   Future deleteTodoById({required String id}) async {
     try {
